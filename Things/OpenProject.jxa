@@ -1,0 +1,31 @@
+#!/usr/bin/env osascript -l JavaScript
+
+function openThingsProject(Things, projectName) {
+  try {
+    theProject = Things.projects.byName(projectName)
+    Things.show(theProject)
+  } catch (variable) {
+    console.log("Error")
+    console.log(variable)
+  } finally {
+    Things.activate()
+  }
+  return theProject
+}
+
+function run(input, parameters) {
+  Things = Application("Things")
+  console.log("Things"+Things.toString())
+  Things.includeStandardAdditions = true
+  Things.activate()
+/*  Things.displayAlert("Things:" +Things.toString() )
+  Things.displayAlert("Input"+JSON.stringify(input))*/
+  projectName = "Inbox"
+  if ( input.length > 0 ) {
+    console.log("Array. Grabbing input zero")
+    projectName = input[0].toString()
+  }
+  var theProject = openThingsProject(Things, projectName)
+  return theProject
+}
+

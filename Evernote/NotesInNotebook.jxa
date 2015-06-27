@@ -1,0 +1,33 @@
+#!/usr/bin/env osascript -l JavaScript
+
+function openEvernoteProject(Evernote, projectName) {
+  try {
+    queryString = "notebook:\""+projectName+"\""
+  	nb = Evernote.notebooks.byName(projectName)
+    console.log(nb)
+    console.log("QueryString: "+queryString)
+    evernoteWindow = Evernote.openCollectionWindow({withQueryString: queryString})
+  } catch (variable) {
+    console.log("Error")
+    console.log(variable)
+  } finally {
+    Evernote.activate()
+  }
+  return evernoteWindow
+}
+
+function run(input, parameters) {
+  Evernote = Application("Evernote")
+  console.log("Evernote"+Evernote.toString())
+  Evernote.includeStandardAdditions = true
+  Evernote.activate()
+/*  Evernote.displayAlert("Evernote:" +Evernote.toString() )
+  Evernote.displayAlert("Input"+JSON.stringify(input))*/
+  projectName = "Family"
+  if ( input.length > 0 ) {
+    console.log("Array. Grabbing input zero")
+    projectName = input[0].toString()
+  }
+  return openEvernoteProject(Evernote, projectName)
+}
+
